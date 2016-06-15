@@ -62,7 +62,7 @@ def main():
 
     # Выводит порядковый номер комбинации при сортировке
     # Если sorted index is None, сортировка невозможна
-    print("Permutation sorted index: {index}".format(index=sorted_index))
+    print("Permutation sorted index: ", sorted_index)
 
 
 if __name__ == "__main__":
