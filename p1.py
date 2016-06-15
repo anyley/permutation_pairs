@@ -5,13 +5,12 @@ import itertools
 class permutate_pairs:
     def __init__(self, array=[]):
         self.origin = array.copy()
-        self.idx = -1
 
     def __iter__(self):
         self.idx = -1
         self.array = self.origin.copy()
         self.cache = {}
-        self.cache[tuple(array)] = True
+        self.cache[tuple(self.array)] = True
         return self
 
     def __next__(self):
@@ -29,8 +28,8 @@ class permutate_pairs:
                 self.array = tmp
                 self.cache[tuple(tmp)] = True
                 return tmp.copy()
-        else:
-            raise StopIteration
+
+        raise StopIteration
 
     def max_permutations(self):
         posible = len(list(self))
@@ -45,22 +44,26 @@ class permutate_pairs:
         return None
 
 
-# Обработка аргументов командной строки
-if len(sys.argv) > 1:
-    # python3 p1.py 123456
-    # >>> array = [1, 2, 3, 4, 5, 6]
-    array = list(map(int, list(sys.argv[1])))
-else:
-    # default array
-    array = [5, 6, 3, 4, 1, 2]
+def main():
+    # Обработка аргументов командной строки
+    if len(sys.argv) > 1:
+        # python3 p1.py 123456
+        # >>> array = [1, 2, 3, 4, 5, 6]
+        array = list(map(int, list(sys.argv[1])))
+    else:
+        # default array
+        array = [5, 6, 3, 4, 1, 2]
+
+    it1 = permutate_pairs(array)
+    posible, imposible = it1.max_permutations()
+    sorted_index = it1.try_to_sort()
+    print("Argument list: {arg}".format(arg=array))
+    print("Posible: {0}\nImposible: {1}".format(posible, imposible))
+
+    # Выводит порядковый номер комбинации при сортировке
+    # Если sorted index is None, сортировка невозможна
+    print("Permutation sorted index: {index}".format(index=sorted_index))
 
 
-it1 = permutate_pairs(array)
-posible, imposible = it1.max_permutations()
-sorted_index = it1.try_to_sort()
-print("Argument list: {arg}".format(arg=array))
-print("Posible: {0}\nImposible: {1}".format(posible, imposible))
-
-# Выводит порядковый номер комбинации при сортировке
-# Если sorted index is None, сортировка невозможна
-print("Permutation sorted index: {index}".format(index=sorted_index))
+if __name__ == "__main__":
+    main()
