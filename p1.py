@@ -33,7 +33,6 @@ class permutate_pairs:
                 self.cache[tuple(tmp)] = 2
                 return tmp
 
-        print(self.cache)
         raise StopIteration
 
     def max_permutations(self):
