@@ -10,7 +10,7 @@ class permutate_pairs:
         self.idx = -1
         self.array = self.origin.copy()
         self.cache = {}
-        self.cache[tuple(self.array)] = True
+        self.cache[tuple(self.array)] = 2
         return self
 
     def __next__(self):
@@ -18,17 +18,22 @@ class permutate_pairs:
         if self.idx == 0:
             return self.array
 
-        for i in range(2, len(self.array) - 1):
+        key = tuple(self.array)
+
+        while self.cache[key] < len(self.array) - 1:
+            offset = self.cache[key]
             tmp = self.array.copy()
-            tmp[0:2], tmp[i:i+2] = tmp[i:i+2], tmp[0:2]
+            tmp[0:2], tmp[offset:offset+2] = tmp[offset:offset+2], tmp[0:2]
 
             if tuple(tmp) in self.cache:
+                self.cache[key] += 1
                 continue
             else:
                 self.array = tmp
-                self.cache[tuple(tmp)] = True
-                return tmp.copy()
+                self.cache[tuple(tmp)] = 2
+                return tmp
 
+        print(self.cache)
         raise StopIteration
 
     def max_permutations(self):
