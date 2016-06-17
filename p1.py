@@ -21,7 +21,7 @@ class permutate_pairs:
         while self.cache[key] < len(self.array) - 1:
             offset = self.cache[key]
             tmp = self.array.copy()
-            tmp[0:2], tmp[offset:offset+2] = tmp[offset:offset+2], tmp[0:2]
+            tmp[0:2], tmp[offset:offset + 2] = tmp[offset:offset + 2], tmp[0:2]
 
             if tuple(tmp) in self.cache:
                 self.cache[key] += 1
@@ -59,10 +59,10 @@ def main():
     else:
         imposible = 0
         posible = 0
-        for array in itertools.permutations([1,2,3,4,5,6]):
+        for array in itertools.permutations([1, 2, 3, 4, 5, 6]):
             it1 = permutate_pairs(list(array))
             result = it1.try_to_sort()
-            if result != None:
+            if result is not None:
                 posible += 1
                 print(array, "=>", (1, 2, 3, 4, 5, 6), "перестановок:", result)
             else:
