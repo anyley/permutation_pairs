@@ -17,9 +17,7 @@ class permutate_pairs:
         self.idx += 1
         if self.idx == 0:
             return self.array
-
         key = tuple(self.array)
-
         while self.cache[key] < len(self.array) - 1:
             offset = self.cache[key]
             tmp = self.array.copy()
@@ -32,7 +30,6 @@ class permutate_pairs:
                 self.array = tmp
                 self.cache[tuple(tmp)] = 2
                 return tmp
-
         raise StopIteration
 
     def max_permutations(self):
@@ -42,7 +39,6 @@ class permutate_pairs:
 
     def try_to_sort(self):
         for item in self:
-            print("#{index}: {array}".format(index=self.idx, array=item))
             if item == [1, 2, 3, 4, 5, 6]:
                 return self.idx
         return None
@@ -54,19 +50,25 @@ def main():
         # python3 p1.py 123456
         # >>> array = [1, 2, 3, 4, 5, 6]
         array = list(map(int, list(sys.argv[1])))
+        it1 = permutate_pairs(array)
+        sorted_index = it1.try_to_sort()
+        if sorted_index is not None:
+            print("Для сортировки потребовалось итераций:", sorted_index)
+        else:
+            print("Попарная сортировка невозможна")
     else:
-        # default array
-        array = [5, 6, 3, 4, 1, 2]
-
-    it1 = permutate_pairs(array)
-    posible, imposible = it1.max_permutations()
-    sorted_index = it1.try_to_sort()
-    print("Argument list: {arg}".format(arg=array))
-    print("Posible: {0}\nImposible: {1}".format(posible, imposible))
-
-    # Выводит порядковый номер комбинации при сортировке
-    # Если sorted index is None, сортировка невозможна
-    print("Permutation sorted index: ", sorted_index)
+        imposible = 0
+        posible = 0
+        for array in itertools.permutations([1,2,3,4,5,6]):
+            it1 = permutate_pairs(list(array))
+            result = it1.try_to_sort()
+            if result != None:
+                posible += 1
+                print(array, "=>", (1, 2, 3, 4, 5, 6), "перестановок:", result)
+            else:
+                imposible += 1
+        print("Сортируемых комбинаций", posible)
+        print("Невозможно отсортировать", imposible, "комбинаций")
 
 
 if __name__ == "__main__":
